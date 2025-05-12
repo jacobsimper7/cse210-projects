@@ -36,5 +36,12 @@ class Program
         Console.WriteLine($"The average is {sum / numbers.Count}.");
         Console.WriteLine($"The greatest number is {greatest}.");
         Console.WriteLine($"The smallest number is {smallest}.");
+        // Stretch Challenges
+        numbers.Sort();
+        Console.WriteLine("The sorted list is: ");
+        foreach (int num in numbers)
+        {
+            Console.WriteLine(num);
+        }
     }
 }
