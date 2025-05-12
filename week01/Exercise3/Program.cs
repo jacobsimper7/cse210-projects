@@ -9,11 +9,11 @@ class Program
         // int number = int.Parse(magicNumberInput);
 
         
-        string play = "yes";
+        bool game = true;
         Console.WriteLine("Welcome to the Number Guessing Game!");
         Console.WriteLine("I have selected a number between 1 and 10. Can you guess it?");
 
-        while (play == "yes")
+        while (game)
         {
             Random randomGenerator = new Random();
             int number = randomGenerator.Next(1, 11);
@@ -21,7 +21,18 @@ class Program
             int numberOfGuesses = 0;
             Console.Write("Would you like to play the game? (yes/no) ");
             string playInput = Console.ReadLine();
-            play = playInput.ToLower();
+            string play = playInput.ToLower();
+            if (play == "no")
+            {
+                game = false;
+                Console.WriteLine("Thanks for playing!");
+                break;
+            }
+            else if (play != "yes")
+            {
+                Console.WriteLine("Invalid input. Please enter 'yes' or 'no'.");
+                continue;
+            }
             while (guess != number)
         {
             Console.Write("What is your guess? ");
