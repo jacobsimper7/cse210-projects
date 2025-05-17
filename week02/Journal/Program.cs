@@ -75,7 +75,8 @@ class Program
         // Stows the response in an Entry object
         Entry entry = new Entry(promptText, response, sobriety, dailyGoals);
         // The entry is formatted as a string with the date, prompt, and response
-        string entryText = entry._date.ToShortDateString() + "\n" + entry._promptText + "\n" + entry._entryText + "\n|";
+        string entryText = entry._date.ToShortDateString() + "\n" + "#Days of sobriety: " + entry._daysOfSobriety + "\n" +
+        "Days in a row completed daily goals: " + entry._dailyGoals + "\n" + entry._promptText + "\n" + entry._entryText + "\n|";
 
         // Adds the entry to the journal
         journal.AddEntry(entryText);
