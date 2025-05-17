@@ -1,3 +1,6 @@
+// To exceed the core requirements, I added a feater for recovering addicts to record their days of sobriety as well 
+// as how they did with their dayly goals
+
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -56,6 +59,12 @@ class Program
     {
         // This method is called when the user chooses to write a journal entry
         // It generates a random prompt and gets the user's response
+        // Gets the user's days of sobriety and their daily goals
+        Console.WriteLine("How many days of sobriety do you have?");
+        string sobriety = Console.ReadLine();
+        Console.WriteLine("How many days in a row have you met your daily goals?");
+        string dailyGoals = Console.ReadLine();
+
         PromptGenerator prompt = new PromptGenerator();
         string promptText = prompt.GetRandomPrompt();
         Console.WriteLine(promptText);
@@ -64,7 +73,7 @@ class Program
         string response = Console.ReadLine();
 
         // Stows the response in an Entry object
-        Entry entry = new Entry(promptText, response);
+        Entry entry = new Entry(promptText, response, sobriety, dailyGoals);
         // The entry is formatted as a string with the date, prompt, and response
         string entryText = entry._date.ToShortDateString() + "\n" + entry._promptText + "\n" + entry._entryText + "\n|";
 
