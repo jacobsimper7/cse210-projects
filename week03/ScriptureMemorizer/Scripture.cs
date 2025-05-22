@@ -60,4 +60,31 @@ public class Scripture
         }
         return true;
     }
+
+    public void DisplayComparison(string userInput, string verseText)
+    {
+        string[] userWords = userInput.Split(' ');
+        string[] verseWords = verseText.Split(' ');
+
+        int max = Math.Max(userWords.Length, verseWords.Length);
+
+        for (int i = 0; i < max; i++)
+        {
+            string verseWord = i < verseWords.Length ? verseWords[i] : "";
+            string userWord = i < userWords.Length ? userWords[i] : "";
+
+            if (verseWord.Equals(userWord, StringComparison.OrdinalIgnoreCase))
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(verseWord + " ");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write((userWord == "" ? "_" : userWord) + " ");
+            }
+        }
+        Console.ResetColor();
+        Console.WriteLine();
+    }
 }
