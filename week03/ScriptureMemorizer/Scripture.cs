@@ -5,7 +5,7 @@
 public class Scripture
 {
     private Reference _reference;
-    private List<Word> _words;
+    private List<Word> _words = new List<Word>();
 
     public Scripture(Reference reference, string verseText)
     {
@@ -21,6 +21,17 @@ public class Scripture
         // This method will hide a random number of words in the scripture.
         // It will randomly select words to hide and replace them with underscores.
         // The number of words to hide is passed as a parameter.
+        Random random = new Random();
+        int count = 0;
+        while (count < numberToHide)
+        {
+            int index = random.Next(_words.Count);
+            if (!_words[index].IsHidden())
+            {
+                _words[index].Hide();
+                count++;
+            }
+        }
     }
 
     public string GetDisplayText()
@@ -28,13 +39,25 @@ public class Scripture
         // This method will return the display text of the scripture.
         // It will combine the book, chapter, and verse with the hidden words.
         // The hidden words will be replaced with underscores.
-        return "";
+        string displayText = _reference.GetDisplayText() + "\n";
+        foreach (Word word in _words)
+        {
+            displayText += word.GetDisplayText() + " ";
+        }
+        return displayText.Trim();
     }
 
     public bool IsCompletelyHidden()
     {
         // This method will check if the scripture is completely hidden.
         // It will return true if all words are hidden, and false otherwise.
-        return false;
+        foreach (Word word in _words)
+        {
+            if (!word.IsHidden())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
