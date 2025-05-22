@@ -15,8 +15,18 @@ class Program
         Console.WriteLine("You can use the format: Book Chapter:Verse(s)");
         Console.WriteLine("For example: John 3:16 or John 3:16-18");
         string inputReference = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(inputReference))
+        {
+            Console.WriteLine("Invalid reference. Please try again.");
+            return;
+        }
         Console.WriteLine("What is the text of the scripture you like to memorize?");
         string inputText = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(inputText))
+        {
+            Console.WriteLine("Invalid text. Please try again.");
+            return;
+        }
         Console.WriteLine("Great! Let's get started.");
         Console.WriteLine("Press enter to continue...");
         Console.ReadLine();
