@@ -20,7 +20,7 @@ public class ChecklistGoal : Goal
         return true; // Placeholder logic, should be replaced with actual completion logic
     }
 
-    public string GetDetailsString()
+    public override string GetDetailsString()
     {
         return "";
     }
