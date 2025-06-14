@@ -1,4 +1,4 @@
-using System;
+using System.IO;
 
 public class EternalGoal : Goal
 {
@@ -20,6 +20,7 @@ public class EternalGoal : Goal
 
     public override string GetStringRepresentation()
     {
-        return "";
+        return $"Eternal Goal - {_shortName}  - {_description} - {_points}";
+
     }
 }

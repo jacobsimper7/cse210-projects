@@ -1,4 +1,4 @@
-using System;
+using System.IO;
 
 public class SimpleGoal : Goal
 {
@@ -6,7 +6,7 @@ public class SimpleGoal : Goal
 
     public SimpleGoal(string name, string description, int points) : base(name, description, points)
     {
-
+        _isComplete = false;
     }
 
     public override void RecordEvent()
@@ -21,6 +21,6 @@ public class SimpleGoal : Goal
 
     public override string GetStringRepresentation()
     {
-        return "";
+        return $"SimpleGoal - {_shortName} - {_description} - {_points} - {_isComplete}";
     }
 }
