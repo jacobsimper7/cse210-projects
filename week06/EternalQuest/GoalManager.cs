@@ -1,3 +1,4 @@
+using System;
 public class GoalManager
 {
     private List<Goal> goals;

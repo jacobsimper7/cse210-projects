@@ -1,3 +1,5 @@
+using System;
+
 public class SimpleGoal : Goal
 {
     private bool _isComplete;
@@ -9,7 +11,7 @@ public class SimpleGoal : Goal
 
     public override void RecordEvent()
     {
-        
+
     }
 
     public override bool IsComplete()
