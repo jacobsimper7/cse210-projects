@@ -80,11 +80,11 @@ public class GoalManager
         {
             if (goal.IsComplete())
             {
-                Console.WriteLine($"[X] {goal.GetDetailsString()}");
+                Console.WriteLine($"[✓] {goal.GetDetailsString()}");
             }
             else
             {
-                Console.WriteLine($"[ ] {goal.GetDetailsString()}");
+                Console.WriteLine($"[] {goal.GetDetailsString()}");
             }
         }
     }
