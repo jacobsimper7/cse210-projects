@@ -19,7 +19,7 @@ public abstract class Goal
 
     public virtual string GetDetailsString()
     {
-        return $"[ ] {_shortName} ({_description}) (Points: {_points})";
+        return $"{_shortName} ({_description}) (Points: {_points})";
     }
 
     public abstract string GetStringRepresentation();
@@ -27,5 +27,10 @@ public abstract class Goal
     public string GetName()
     {
         return _shortName;
+    }
+
+    public int GetPoints()
+    {
+        return _points;
     }
 }

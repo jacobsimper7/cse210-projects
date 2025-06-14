@@ -27,12 +27,12 @@ public class GoalManager
             input = Console.ReadLine();
             if (input == "1")
             {
-                Console.WriteLine("Creating a new goal...");
+                ;
                 CreateGoal();
             }
             else if (input == "2")
             {
-                Console.WriteLine("Listing goals...");
+                ;
                 ListGoalDetails();
             }
             else if (input == "3")
@@ -41,18 +41,15 @@ public class GoalManager
             }
             else if (input == "4")
             {
-                Console.WriteLine("Loading goals...");
-                // Call the method to load goals
+                LoadGoals();
             }
             else if (input == "5")
             {
-                Console.WriteLine("Recording an event...");
-                // Call the method to record an event
+                RecordEvent();
             }
             else if (input == "6")
             {
                 Console.WriteLine("Quitting the program...");
-                // Exit the program
             }
             else
             {
@@ -71,7 +68,8 @@ public class GoalManager
         Console.WriteLine("List of Goals:");
         foreach (Goal goal in _goals)
         {
-            Console.WriteLine(goal.GetName());
+            int index = _goals.IndexOf(goal) + 1;
+            Console.WriteLine($"{index}. {goal.GetName()}");
         }
     }
 
@@ -80,7 +78,14 @@ public class GoalManager
         Console.WriteLine("List of Goals:");
         foreach (Goal goal in _goals)
         {
-            Console.WriteLine(goal.GetDetailsString());
+            if (goal.IsComplete())
+            {
+                Console.WriteLine($"[X] {goal.GetDetailsString()}");
+            }
+            else
+            {
+                Console.WriteLine($"[ ] {goal.GetDetailsString()}");
+            }
         }
     }
 
@@ -125,7 +130,25 @@ public class GoalManager
 
     public void RecordEvent()
     {
-
+        if (_goals.Count == 0)
+        {
+            Console.WriteLine("No goals available to record an event.");
+            return;
+        }
+        
+        Console.WriteLine("Which goal did you accomplish? (Enter the number)");
+        ListGoalNames();
+        int goalIndex = int.Parse(Console.ReadLine()) - 1;
+        if (goalIndex >= 0 && goalIndex < _goals.Count)
+        {
+            Goal goal = _goals[goalIndex];
+            goal.RecordEvent();
+            _score += goal.GetPoints();
+        }
+        else
+        {
+            Console.WriteLine("Invalid goal index.");
+        }
     }
 
     public void SaveGoals()
@@ -153,6 +176,55 @@ public class GoalManager
 
     public void LoadGoals()
     {
+        Console.WriteLine("What is the name of the file you want to load from? (don't add file extension)");
+        string fileName = Console.ReadLine();
+        if (string.IsNullOrEmpty(fileName))
+        {
+            fileName = "goals.txt";
+        }
+        else
+        {
+            fileName += ".txt";
+        }
 
+        if (!File.Exists(fileName))
+        {
+            Console.WriteLine("File not found.");
+            return;
+        }
+
+        string[] lines = File.ReadAllLines(fileName);
+        _goals.Clear();
+        _score = int.Parse(lines[0]);
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string[] parts = lines[i].Split('-');
+            for (int j = 0; j < parts.Length; j++)
+                parts[j] = parts[j].Trim();
+
+            if (parts[0] == "SimpleGoal")
+            {
+                SimpleGoal simpleGoal = new SimpleGoal(parts[1], parts[2], int.Parse(parts[3]), bool.Parse(parts[4]));
+                _goals.Add(simpleGoal);
+            }
+            else if (parts[0] == "EternalGoal")
+            {
+                int timesCompleted = parts.Length > 4 ? int.Parse(parts[4]) : 0;
+                List<DateTime> completionDates = new List<DateTime>();
+                if (parts.Length > 5 && !string.IsNullOrWhiteSpace(parts[5]))
+                {
+                    completionDates = parts[5].Split(',').Select(s => DateTime.Parse(s)).ToList();
+                }
+                EternalGoal eternalGoal = new EternalGoal(parts[1], parts[2], int.Parse(parts[3]), timesCompleted);
+                _goals.Add(eternalGoal);
+            }
+            else if (parts[0] == "ChecklistGoal")
+            {
+                ChecklistGoal checklistGoal = new ChecklistGoal(parts[1], parts[2], int.Parse(parts[3]), int.Parse(parts[4]), int.Parse(parts[5]), int.Parse(parts[6]));
+                _goals.Add(checklistGoal);
+            }
+        }
+
+        Console.WriteLine("Goals loaded from file.");
     }
 }

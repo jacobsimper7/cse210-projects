@@ -9,9 +9,22 @@ public class SimpleGoal : Goal
         _isComplete = false;
     }
 
+    public SimpleGoal(string name, string description, int points, bool isComplete) : base(name, description, points)
+    {
+        _isComplete = isComplete;
+    }
+
     public override void RecordEvent()
     {
-
+        if (!_isComplete)
+        {
+            _isComplete = true;
+            Console.WriteLine($"Congratulations! You have earned {_points} points!");
+        }
+        else
+        {
+            Console.WriteLine("You have already completed this goal.");
+        }
     }
 
     public override bool IsComplete()
